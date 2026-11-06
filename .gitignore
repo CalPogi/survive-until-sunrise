@@ -1,0 +1,10 @@
+*.rbxl
+*.rbxlx
+*.rbxl.lock
+*.rbxlx.lock
+sourcemap.json
+globalTypes.d.luau
+roblox.yml
+build/
+.claude/settings.local.json
+.env

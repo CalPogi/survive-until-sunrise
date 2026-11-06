@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "skills": {
+    "audio-design": {
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/disciplines/audio-design/SKILL.md",
+      "computedHash": "bd51a53299313b91245ad13ee4d36c9581ed7cda936ac9b46e21438c23e3752d"
+    },
+    "blender-animation": {
+      "source": "RobLe3/cc-blender-skill",
+      "sourceType": "github",
+      "skillPath": "plugin/skills/blender-animation/SKILL.md",
+      "computedHash": "5eb49074e795b227f9578ddf70be7bd9bd72183617014b7fed2aca0498c64c02"
+    },
+    "blender-export": {
+      "source": "RobLe3/cc-blender-skill",
+      "sourceType": "github",
+      "skillPath": "plugin/skills/blender-export/SKILL.md",
+      "computedHash": "6173dbd56542a35dbe1976abeb5f078af0e9e46f41a04911ff72dc349cdb4716"
+    },
+    "blender-materials": {
+      "source": "RobLe3/cc-blender-skill",
+      "sourceType": "github",
+      "skillPath": "plugin/skills/blender-materials/SKILL.md",
+      "computedHash": "e79dfce8cfb30b7e90f93c05a837853aa0b94e3b312d7310e17f67ecc33f5a1e"
+    },
+    "blender-modeling": {
+      "source": "RobLe3/cc-blender-skill",
+      "sourceType": "github",
+      "skillPath": "plugin/skills/blender-modeling/SKILL.md",
+      "computedHash": "df8a4f73644dfdba792e35807e5138a6c77592fff80dc6c53da182beee60fd78"
+    },
+    "blender-uv-texturing": {
+      "source": "RobLe3/cc-blender-skill",
+      "sourceType": "github",
+      "skillPath": "plugin/skills/blender-uv-texturing/SKILL.md",
+      "computedHash": "67419aae19f2335e6ba92375d2ff5e7940fd9b9d2538fc4d95425cd3bc389bf5"
+    },
+    "create-game-assets": {
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/disciplines/create-game-assets/SKILL.md",
+      "computedHash": "3bd438570eeffc5404ce4626c3d6c909be2788d6a5096f04f1aecb10546c6c30"
+    },
+    "game-ui-ux": {
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/disciplines/game-ui-ux/SKILL.md",
+      "computedHash": "490f2da7505775f88c4bbd7c98bc2552ea60821210f5ae8c1e00414161be60f7"
+    },
+    "roblox-characters": {
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/other-engines/roblox-characters/SKILL.md",
+      "computedHash": "db42c1ce7feb87982d3b2a99e086aa0f240907e9bdda75078fbc54c375c5e1c7"
+    },
+    "roblox-datastores": {
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/other-engines/roblox-datastores/SKILL.md",
+      "computedHash": "625a20184d9bf55a4f90a8ee60c283b8fb819cc7f2ad1091bf307d408b2c24a6"
+    },
+    "roblox-luau": {
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/other-engines/roblox-luau/SKILL.md",
+      "computedHash": "fc8c84463e2d417cce3f0c0bf2d334bab77f83c2ed75627dc63cae18a976ed23"
+    },
+    "roblox-networking": {
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/other-engines/roblox-networking/SKILL.md",
+      "computedHash": "076fc2bf03bbdf16e95b196131da15c38291e7be98a7e424ef7f4e4c3e32c673"
+    },
+    "roblox-studio-workflow": {
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/other-engines/roblox-studio-workflow/SKILL.md",
+      "computedHash": "1370f7377c49f09caf7717c1ac00837505e4be04d29160d96a1012085469a3b1"
+    },
+    "roblox-ui": {
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/other-engines/roblox-ui/SKILL.md",
+      "computedHash": "d74afdae9aa479874ace9163ee5e2192136ba54d9b909cedbd2fe745983267a1"
+    }
+  }
+}

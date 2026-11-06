@@ -1,0 +1,22 @@
+{
+	"permissions": {
+		"allow": [
+			"Bash(rojo:*)",
+			"Bash(selene:*)",
+			"Bash(stylua:*)",
+			"Bash(lune:*)",
+			"Bash(luau-lsp:*)",
+			"Bash(./tools/verify.sh)",
+			"Bash(git status:*)",
+			"Bash(git diff:*)",
+			"Bash(git log:*)",
+			"Bash(git show:*)"
+		],
+		"deny": [
+			"Bash(rm -rf:*)",
+			"Bash(git push --force:*)",
+			"Bash(git push -f:*)",
+			"Bash(git push --force-with-lease:*)"
+		]
+	}
+}
