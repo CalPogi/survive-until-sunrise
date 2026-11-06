@@ -118,6 +118,19 @@ function Net.onEvent(name: string, options: EventOptions)
 	publish(remote, name)
 end
 
+-- For replaceable data. Calls may be dropped or reordered, and over 1000 bytes is dropped.
+function Net.onUnreliableEvent(name: string, options: EventOptions)
+	claim(name)
+	local limiter = newLimiter(options.rate)
+	local remote = Instance.new("UnreliableRemoteEvent")
+	remote.OnServerEvent:Connect(function(player: Player, ...: unknown)
+		if admit(limiter, options.checks, player, name, ...) then
+			options.handler(player, { ... })
+		end
+	end)
+	publish(remote, name)
+end
+
 function Net.onFunction(name: string, options: FunctionOptions)
 	claim(name)
 	local limiter = newLimiter(options.rate)
@@ -141,6 +154,21 @@ end
 function Net.clientEvent(name: string): ClientEvent
 	claim(name)
 	local remote = Instance.new("RemoteEvent")
+	publish(remote, name)
+	return {
+		fire = function(player: Player, ...: unknown)
+			remote:FireClient(player, ...)
+		end,
+		fireAll = function(...: unknown)
+			remote:FireAllClients(...)
+		end,
+	}
+end
+
+-- Server-to-client event for replaceable data. May be dropped or reordered; over 1000 bytes is dropped.
+function Net.unreliableClientEvent(name: string): ClientEvent
+	claim(name)
+	local remote = Instance.new("UnreliableRemoteEvent")
 	publish(remote, name)
 	return {
 		fire = function(player: Player, ...: unknown)

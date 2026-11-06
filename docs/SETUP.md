@@ -13,7 +13,7 @@
 ## Playtesting
 1. `rojo serve` in the repo root (port 34872).
 2. In Studio: open a place, Plugins > Rojo > Connect.
-3. Press Play. The template Ping smoke test should print `[Ping] pong: hello`, `[Ping] echo 21 -> 42`, and the server should warn `[Net] dropped Ping from <userId>: invalid arguments` once.
+3. Press Play. Five grey "Bot" ghosts should walk circles around the spawn, and the server prints a `[Ghost]` report every 30 s. Cross-server messaging doesn't run in Studio, so the bots loop back with a fake delay (`docs/specs/ghost-live.md`).
 
 ## Asset tools (one-time)
 1. **Roblox Studio MCP:** in Studio, Assistant > ... > Manage MCP Servers > turn on **Enable Studio as MCP server**, with a place open. Claude Code loads `.mcp.json` only when the session starts in this repo folder (not a parent folder), and asks once to approve `Roblox_Studio` and `blender` (`claude mcp list` shows "Pending approval" until then). Working on several games? Register both servers once at user scope so every folder gets them:

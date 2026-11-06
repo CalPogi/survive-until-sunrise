@@ -133,6 +133,12 @@ return function(t: Harness.T)
 		t.eq(decoded.entries[2].userId, top)
 	end)
 
+	t.test("an action survives a round trip", function()
+		local e = entry(1)
+		e.anim = GhostCodec.Action.Jump
+		t.eq(decodeOnly((GhostCodec.encode(1, { e }))).entries[1].anim, GhostCodec.Action.Jump)
+	end)
+
 	t.test("negative anim and held clamp to zero", function()
 		local e = entry(1)
 		e.anim, e.held = -5, -5

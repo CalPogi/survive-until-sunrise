@@ -5,13 +5,13 @@ Principle: prove the risky parts first (cross-server play and map data), then bu
 | # | Phase | What happens | Gate |
 |---|---|---|---|
 | 0 | Setup | Run `tools/setup.sh` and `tools/verify.sh`. Fill `.env` (Roblox Open Cloud key, Freesound key) | Verify passes |
-| 1 | Multiplayer prototype | Two live servers on a blank map: ghost players, hit claims, area ownership with leases, delay measurements | Delay and message limits acceptable |
-| 2 | Pilot tile and generator spike (parallel with 1) | About 1 km2 of Santiago City from open data, plus a first seeded generated area. Compare the plugin route with OSM2World in Blender, measure size and load time | Looks right and runs on phone |
+| 1 | Ghost prototype (done, polish in progress) | Two live servers on a blank map: ghosts and delay measurements, then send-on-change and instant actions | The two-account test feels better than before |
+| 2 | World-size test and generator spike | Generate terrain far from the center to find the largest usable world. About 1 km2 of Santiago City from open data, plus a first seeded area. Compare the plugin route with OSM2World in Blender, measure load time and memory | Largest size measured, looks right, runs on phone |
 | 3 | Art bible and field survey (parallel) | Fill the art bible. You take photos of the hub, landmarks and typical houses | Style and house types defined |
-| 4 | Gameplay slice | One server, pilot area: the first infected (Heliotrope with day and night behaviour), loot, combat, one vehicle, player data, hub, basic tribes and bases | Fun with 10 to 20 players |
-| 5 | World state and ghosts on the real map | Persistence, lazy simulation, leases, ghosts in the pilot map | Restart or crash keeps the world intact |
-| 6 | Endless world | Seeded generation next to Santiago City, area handoffs, infection layer, 50-building accuracy check on the start area | Generation works at any distance from the start |
-| 7 | Scale | Bot load tests, generated dense-town and mountain stress areas, then widen the generated world | Measured capacity |
+| 4 | Gameplay slice on one server | Santiago City: the first infected (Heliotrope with day and night behaviour), loot, combat, one vehicle, player data, saved world records, hub, basic groups and bases | Fun with 10 to 20 players, restart keeps the world intact |
+| 5 | Fill-first joining and home regions | Start when nearing one server's capacity. Bot load test for players per server | A full server opens a new one, and parties land together |
+| 6 | Cells and shared bosses | Start when multiple servers are really happening. Ghosts per cell, owner server for Bloommothers and Hollow Oaks, cross-server hit claims if still wanted | Ghost traffic stays within limits, and a crashed boss owner is taken over |
+| 7 | Grow the world | Seeded generation out to the measured edge, infection layer, generated dense-town and mountain stress areas, 50-building accuracy check on the start area | Generation works out to the edge |
 | 8 | Launch prep | Roblox-native monetization, moderation, polish | Your call |
 
 ## Tools by job

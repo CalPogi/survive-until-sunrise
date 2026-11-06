@@ -9,8 +9,14 @@ local failed = Harness.run({
 	{ name = "RateLimiter", spec = require("./RateLimiter.spec") },
 	{ name = "GhostCodec", spec = require("./GhostCodec.spec") },
 	{ name = "GhostInterpolator", spec = require("./GhostInterpolator.spec") },
+	{ name = "GhostPacer", spec = require("./GhostPacer.spec") },
+	{ name = "GhostPose", spec = require("./GhostPose.spec") },
+	{ name = "GhostReport", spec = require("./GhostReport.spec") },
 	{ name = "RewindBuffer", spec = require("./RewindBuffer.spec") },
 	{ name = "GhostBudget", spec = require("./GhostBudget.spec") },
+	{ name = "GhostArea", spec = require("./GhostArea.spec") },
+	{ name = "GhostBots", spec = require("./GhostBots.spec") },
+	{ name = "LatencyStats", spec = require("./LatencyStats.spec") },
 })
 
 if failed > 0 then

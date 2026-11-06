@@ -75,7 +75,7 @@ Out-of-range values are clamped, with two exceptions. A player with a non-finite
 - **Extrapolate** from the last sample's velocity for up to 0.25 s if no newer sample exists, then hold still.
 - **Snap** instead of blending when two samples imply more than 200 studs/s, which covers respawns and teleports.
 - **Ignore** samples older than the newest one received, or claiming to be more than 5 s ahead of what the offset expects. Ignored samples don't keep a ghost alive.
-- **Remove** a ghost after no sample for 3 send intervals, with a 5 s minimum. The caller discards the interpolator on `gone` and makes a new one if the player returns, which also recovers from a real clock step.
+- **Remove** a ghost after no sample for 3 send intervals, with an 8 s minimum (5 s until `ghost-polish.md`). The caller discards the interpolator on `gone` and makes a new one if the player returns, which also recovers from a real clock step.
 
 ### Rewind buffer
 - Holds `maxAge` seconds of positions for each local player, at the server's sampling rate. `maxAge` must cover the longest send interval + 0.1 s + 2 x transit, so about 4 s until transit is measured.

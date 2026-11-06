@@ -2,7 +2,7 @@
 local GhostInterpolator = require("../src/shared/GhostInterpolator")
 local Harness = require("./Harness")
 
--- A 1 s send interval gives a render delay of 1.1 s and a removal timeout of 5 s.
+-- A 1 s send interval gives a render delay of 1.1 s and a removal timeout of 8 s.
 local DELAY = 1.1
 
 local function at(x: number, overrides: { yaw: number?, vx: number?, anim: number? }?): GhostInterpolator.Sample
@@ -24,6 +24,84 @@ return function(t: Harness.T)
 		local allowed = tolerance or 0.001
 		t.ok(math.abs(actual - expected) <= allowed, `{message or ""} expected {expected}, got {actual}`)
 	end
+
+	t.test("a steady walker moves the same distance every frame as samples arrive", function()
+		local ghost = GhostInterpolator.new(0.4)
+		local now, nextSample, sent = 0, 0, 0
+		local lastX: number? = nil
+		while now < 6 do
+			if now >= nextSample then
+				ghost:push(sent, sent + 0.2, at(sent * 16, { vx = 16 }))
+				sent += 0.45
+				nextSample = sent + 0.2
+			end
+			local x = ghost:sample(now).x
+			if lastX and now > 2 then
+				near(x - lastX, 16 / 60, 0.01, `at {now}`)
+			end
+			lastX = x
+			now += 1 / 60
+		end
+	end)
+
+	t.test("a jump waits for the body to reach its time, then follows the arc", function()
+		local ghost = GhostInterpolator.new(1)
+		ghost:push(10, 10, at(0))
+		ghost:playJump(11)
+		near(ghost:sample(11.5).y, 0, 0.001, "the body hasn't got there")
+		near(ghost:sample(11 + DELAY).y, 0, 0.001, "at takeoff")
+		near(ghost:sample(11.135 + DELAY).y, 5.4, 0.1, "on the way up")
+		near(ghost:sample(11.27 + DELAY).y, 7.2, 0.05, "at the peak")
+		near(ghost:sample(11.405 + DELAY).y, 5.4, 0.1, "on the way down")
+		near(ghost:sample(11.6 + DELAY).y, 0, 0.001, "landed")
+	end)
+
+	t.test("the state says whether a jump is playing", function()
+		local ghost = GhostInterpolator.new(1)
+		ghost:push(10, 10, at(0))
+		ghost:playJump(11)
+		t.eq(ghost:sample(11.5).jumping, false, "the body hasn't got there")
+		t.eq(ghost:sample(11.2 + DELAY).jumping, true, "in the air")
+		t.eq(ghost:sample(11.6 + DELAY).jumping, false, "landed")
+	end)
+
+	t.test("a new sample during a jump doesn't change the arc", function()
+		local ghost = GhostInterpolator.new(1)
+		ghost:push(10, 10, at(0))
+		ghost:playJump(11)
+		ghost:sample(11.2 + DELAY)
+		ghost:push(11.1, 11.1, at(0))
+		near(ghost:sample(11.27 + DELAY).y, 7.2, 0.05, "at the peak")
+		near(ghost:sample(11.6 + DELAY).y, 0, 0.001, "landed")
+	end)
+
+	t.test("a jump arriving during another plays after it, without cutting it off", function()
+		local ghost = GhostInterpolator.new(1)
+		ghost:push(10, 10, at(0))
+		ghost:playJump(11)
+		ghost:playJump(11.58)
+		near(ghost:sample(11.27 + DELAY).y, 7.2, 0.05, "first peak")
+		near(ghost:sample(11.56 + DELAY).y, 0, 0.001, "landed between jumps")
+		near(ghost:sample(11.85 + DELAY).y, 7.2, 0.05, "second peak")
+	end)
+
+	t.test("a jump that would start high in another's arc is ignored", function()
+		local ghost = GhostInterpolator.new(1)
+		ghost:push(10, 10, at(0))
+		ghost:playJump(11)
+		ghost:playJump(11.3)
+		near(ghost:sample(11.3 + DELAY).y, 7.1, 0.1, "still on the first arc")
+		near(ghost:sample(11.6 + DELAY).y, 0, 0.001, "landed on the first arc's time")
+	end)
+
+	t.test("a jump older than the newest is ignored", function()
+		local ghost = GhostInterpolator.new(1)
+		ghost:push(10, 10, at(0))
+		ghost:playJump(11)
+		ghost:playJump(10)
+		near(ghost:sample(10.27 + DELAY).y, 0, 0.001, "the old time")
+		near(ghost:sample(11.27 + DELAY).y, 7.2, 0.05, "the newest time")
+	end)
 
 	t.test("the midpoint between two samples gives the midpoint position", function()
 		local ghost = GhostInterpolator.new(1)
@@ -136,16 +214,16 @@ return function(t: Harness.T)
 		local ghost = GhostInterpolator.new(1)
 		t.eq(ghost:sample(0).status, "gone")
 		ghost:push(10, 10, at(0))
-		t.eq(ghost:sample(14.9).status, "holding")
-		t.eq(ghost:sample(15.1).status, "gone")
+		t.eq(ghost:sample(17.9).status, "holding")
+		t.eq(ghost:sample(18.1).status, "gone")
 	end)
 
 	t.test("the timeout grows with the send interval", function()
 		local ghost = GhostInterpolator.new(1)
 		ghost:push(10, 10, at(0))
-		ghost:setSendInterval(2.5)
-		t.ok(ghost:sample(17).status ~= "gone", "3 x 2.5 s is 7.5 s")
-		t.eq(ghost:sample(17.6).status, "gone")
+		ghost:setSendInterval(4)
+		t.ok(ghost:sample(21.9).status ~= "gone", "3 x 4 s is 12 s")
+		t.eq(ghost:sample(22.1).status, "gone")
 	end)
 
 	t.test("memory stays bounded", function()
@@ -179,7 +257,7 @@ return function(t: Harness.T)
 		local ghost = GhostInterpolator.new(1)
 		ghost:push(10, 10, at(0))
 		ghost:push(9, 14, at(0))
-		t.eq(ghost:sample(15.5).status, "gone")
+		t.eq(ghost:sample(18.5).status, "gone")
 	end)
 
 	t.test("gone still reports render time on the sender's clock", function()
@@ -247,6 +325,16 @@ return function(t: Harness.T)
 		t.ok(after.renderTime > before.renderTime, "render time must keep moving forward")
 		local settled = ghost:sample(30)
 		near(settled.renderTime, 30 - 2.6)
+	end)
+
+	t.test("a late sample that moves the ghost blends in with no jump, then settles", function()
+		local ghost = GhostInterpolator.new(1)
+		ghost:push(10, 10, at(0, { vx = 10 }))
+		local before = ghost:sample(10.2 + DELAY).x
+		ghost:push(10.5, 10.2 + DELAY, at(0))
+		local after = ghost:sample(10.2 + DELAY).x
+		near(after, before, 0.001, "no jump when the sample arrives")
+		near(ghost:sample(13 + DELAY).x, 0, 0.01, "settled on the real position")
 	end)
 
 	t.test("enough history is kept for the longest delay at the fastest rate", function()

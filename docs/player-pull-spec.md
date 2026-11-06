@@ -10,7 +10,7 @@ Tuning metric: pairs of players within 100 m of each other per hour. Log it from
 | 1 | Hub per region | One fortified settlement per region: market, stash, respawn, safe zone. New players spawn only at active hubs. | `hub_chunk_id`, safe-zone radius |
 | 2 | Supply runs | Hubs post requests (medicine, fuel, ammo) with a deadline. The best source is a dangerous building, so players group up. | request count, quantity, reward, deadline |
 | 3 | Outbreak events | A timed horde or boss spawns at a named landmark and shows on the regional map for 20-30 min. | spawn interval, duration, density |
-| 4 | Infection score | Each region has a 0-100 score. Clearing zombies and restoring power lowers it. It spreads along the region graph. Everyone sees it on the map. | spread rate, decay, loot and zombie modifiers by band |
+| 4 | Infection score | Each region has a 0-100 score. Clearing zombies and restoring power lowers it. It spreads between neighbouring regions. Everyone sees it on the map. | spread rate, decay, loot and zombie modifiers by band |
 | 5 | Friend and party join | One click to land in a friend's region and channel. Parties are routed to the same channel. | channel cap, party size |
 
 ## Pacing rules

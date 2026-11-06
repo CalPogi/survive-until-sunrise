@@ -19,7 +19,7 @@ export type Entry = {
 	yaw: number, -- degrees
 	vx: number,
 	vz: number,
-	anim: number,
+	anim: number, -- an action from GhostCodec.Action, or 0
 	held: number,
 }
 
@@ -56,6 +56,11 @@ local GhostCodec = {}
 
 GhostCodec.MAX_CHARS = 900
 GhostCodec.MAX_ENTRIES = (GhostCodec.MAX_CHARS - HEADER_LENGTH) // ENTRY_LENGTH
+
+-- Values for Entry.anim. 0 means no action. Unknown values are ignored on receipt.
+GhostCodec.Action = {
+	Jump = 1,
+}
 
 local function isFinite(value: number): boolean
 	return value == value and value ~= math.huge and value ~= -math.huge
